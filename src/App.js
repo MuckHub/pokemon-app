@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Main from './components/Main';
+import Detailed from './components/Detailed';
 
 import {
   BrowserRouter as Router,
@@ -18,12 +19,16 @@ function App() {
           <Main />
         </Route>
 
-        <Route path='/pokemon'>
+        <Route exact path='/pokemon'>
           <Main />
         </Route>
 
-        <Route path='/pokemon/:id'>
-          <div>POKEMON</div>
+        <Route exact path='/pokemon/:id'>
+          <Detailed />
+        </Route>
+
+        <Route path='*'>
+          <div>Something went wrong</div>
         </Route>
       </Switch>
     </Router>
