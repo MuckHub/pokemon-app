@@ -27,7 +27,6 @@ const useStyles = makeStyles({
   },
   visible: {
     opacity: 1,
-    transition: 'opacity 1s',
   },
   hidden: {
     opacity: 0,
@@ -46,13 +45,18 @@ export default function Detailed() {
   };
 
   const getPokemonData = async () => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await response.json();
-    setPokemonData(data);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      const data = await response.json();
+      setPokemonData(data);
+    } catch (error) {
+      history.push('/404');
+    }
   };
 
   useEffect(() => {
     getPokemonData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

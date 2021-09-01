@@ -42,13 +42,17 @@ export default function Main() {
   const params = Object.fromEntries(urlSearchParams.entries());
 
   const getData = async () => {
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${params.limit}&offset=${
-        params.page - 1
-      }`
-    );
-    const data = await response.json();
-    setData(data);
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon?limit=${params.limit}&offset=${
+          (params.page - 1) * params.limit
+        }`
+      );
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      history.push('/404');
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -72,11 +76,9 @@ export default function Main() {
       setPokemonsPerPage(10);
       setPage(0);
       history.push('pokemon?limit=10&page=1');
+      getData();
     }
-  }, []);
-
-  useEffect(() => {
-    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return (
@@ -95,8 +97,8 @@ export default function Main() {
           <Pagination
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangePokemonsPerPage}
-            page={page}
-            rowsPerPage={pokemonsPerPage}
+            page={+page}
+            rowsPerPage={+pokemonsPerPage}
             count={data && data.count}
           />
         </div>

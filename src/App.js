@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Main from './components/Main';
 import Detailed from './components/Detailed';
+import NotFound from './components/404';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -29,7 +23,7 @@ function App() {
         </Route>
 
         <Route path='*'>
-          <div>Something went wrong</div>
+          <NotFound />
         </Route>
       </Switch>
     </Router>
