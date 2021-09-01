@@ -3,7 +3,7 @@ import FlexLayoutGrid from './Grid';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Pagination from './Pagination';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,42 +36,48 @@ export default function Main() {
 
   const classes = useStyles();
   let history = useHistory();
+  let url = useLocation().search;
+
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
 
   const getData = async () => {
     const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${pokemonsPerPage}&offset=${page}`
+      `https://pokeapi.co/api/v2/pokemon?limit=${params.limit}&offset=${
+        params.page - 1
+      }`
     );
     const data = await response.json();
     setData(data);
-    history.push(`/pokemon?limit=${pokemonsPerPage}&page=${page + 1}`);
   };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    history.push(`pokemon?limit=${pokemonsPerPage}&page=${newPage + 1}`);
   };
 
   const handleChangePokemonsPerPage = (event) => {
     setPokemonsPerPage(parseInt(event.target.value, 10));
+    history.push(`pokemon?limit=${parseInt(event.target.value, 10)}&page=${1}`);
     setPage(0);
   };
 
-  const checkUrlParams = () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-
-    if (params.limit > 1 && params.page > 1) {
-      setPokemonsPerPage(+params.limit);
-      setPage(params.page - 1);
-    }
-  };
-
   useEffect(() => {
-    checkUrlParams();
+    if (params.limit >= 0 && params.page >= 0) {
+      setPokemonsPerPage(params.limit);
+      setPage(params.page - 1);
+      history.push(`pokemon?limit=${params.limit}&page=${params.page}`);
+      getData();
+    } else {
+      setPokemonsPerPage(10);
+      setPage(0);
+      history.push('pokemon?limit=10&page=1');
+    }
   }, []);
 
   useEffect(() => {
     getData();
-  }, [pokemonsPerPage, page]);
+  }, [url]);
 
   return (
     <>

@@ -9,6 +9,7 @@ import {
   Route,
   Link,
   useHistory,
+  Redirect,
 } from 'react-router-dom';
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Main />
         </Route>
 
-        <Route exact path='/pokemon/:id'>
+        <Route path='/pokemon/:id'>
           <Detailed />
         </Route>
 
