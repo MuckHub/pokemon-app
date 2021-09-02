@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Main from './components/Main';
 import Detailed from './components/Detailed';
 import NotFound from './components/404';

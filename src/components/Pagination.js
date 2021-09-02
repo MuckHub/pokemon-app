@@ -1,7 +1,7 @@
 import React from 'react';
 import TablePagination from '@material-ui/core/TablePagination';
 
-export default function TablePaginationDemo({
+export default function Pagination({
   onPageChange,
   onRowsPerPageChange,
   page,

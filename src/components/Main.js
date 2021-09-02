@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import FlexLayoutGrid from './Grid';
+import Content from './Content';
+import TopNav from './TopNav';
 import Container from '@material-ui/core/Container';
-import AppBar from '@material-ui/core/AppBar';
 import Pagination from './Pagination';
-import { useHistory, useLocation } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navbar: {
-    height: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,13 +77,11 @@ export default function Main() {
 
   return (
     <>
-      <AppBar className={classes.navbar} position='static'>
-        <div>Pokemons</div>
-      </AppBar>
+      <TopNav />
 
       <Container maxWidth='md' className={classes.container}>
         {!data && <CircularProgress />}
-        {data && <FlexLayoutGrid data={data.results} />}
+        {data && <Content data={data.results} />}
       </Container>
 
       {data && (

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SpacingGrid({ data }) {
+export default function Content({ data }) {
   const classes = useStyles();
 
   return (

@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import PokemonCard from './PokemonCard';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { makeStyles } from '@material-ui/core/styles';
 import { useParams, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
-  root: {
-    marginTop: 40,
-    width: 200,
-  },
-  pos: {
-    marginBottom: 12,
-  },
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -24,12 +16,6 @@ const useStyles = makeStyles({
   },
   spinner: {
     marginTop: 40,
-  },
-  visible: {
-    opacity: 1,
-  },
-  hidden: {
-    opacity: 0,
   },
 });
 
@@ -63,25 +49,13 @@ export default function Detailed() {
     <Container className={classes.container}>
       {!pokemonData && <CircularProgress className={classes.spinner} />}
       {pokemonData && (
-        <Card className={classes.root} variant='outlined'>
-          <CardContent>
-            <Typography variant='h5' component='h2'>
-              {pokemonData.name}
-            </Typography>
-            <Typography className={classes.pos} color='textSecondary'>
-              Weight: {pokemonData.weight}
-            </Typography>
-
-            <img
-              src={pokemonData.sprites.front_default}
-              alt={pokemonData.name}
-              className={imgLoaded ? classes.visible : classes.hidden}
-              onLoad={() => setImgLoaded(true)}
-            />
-
-            {!imgLoaded && <CircularProgress />}
-          </CardContent>
-        </Card>
+        <PokemonCard
+          pokemonName={pokemonData.name}
+          pokemonWeigth={pokemonData.weight}
+          pokemonImg={pokemonData.sprites.front_default}
+          isLoaded={imgLoaded}
+          onLoad={setImgLoaded}
+        />
       )}
 
       {pokemonData && <Button onClick={goBack}>Back</Button>}
