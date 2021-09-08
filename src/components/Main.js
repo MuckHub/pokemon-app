@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { POKEMON_API_URL } from '../fileWithConstants';
+import { POKEMON_API_URL } from '../constants/api';
 
 const useStyles = makeStyles((theme) => ({
   container: {

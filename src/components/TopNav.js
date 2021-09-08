@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import i18n from 'i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { LANGUAGES } from '../fileWithConstants';
+import { LANGUAGES } from '../constants/index';
 
 const useStyles = makeStyles((theme) => ({
   navbar: {

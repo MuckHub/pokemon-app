@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams, useHistory } from 'react-router-dom';
-import { DETAILED_POKEMON_URL } from '../fileWithConstants';
+import { DETAILED_POKEMON_URL } from '../constants/api';
 
 const useStyles = makeStyles({
   container: {
