@@ -72,8 +72,7 @@ export default function Main() {
       <TopNav />
 
       <Container maxWidth='md' className={classes.container}>
-        {isLoading && <CircularProgress />}
-        {!isLoading && <Content data={data.results} />}
+        {isLoading ? <CircularProgress /> : <Content data={data.results} />}
       </Container>
 
       {!isLoading && (

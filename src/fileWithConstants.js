@@ -5,6 +5,6 @@ export const POKEMON_API_URL = (pokemonsPerPage, pageOffset) => {
 };
 
 //routes
-export const POKEMON = '/pokemon';
+export const POKEMON = '/pokemon/';
 
-
+export const LANGUAGES = { GERMAN: 'de', ENGLISH: 'en' };

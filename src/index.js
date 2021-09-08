@@ -4,7 +4,7 @@ import App from './App';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './index.css';
-import './i18n';
+import './translations/i18n';
 
 ReactDOM.render(
   <React.StrictMode>

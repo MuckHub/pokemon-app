@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import i18n from 'i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { LANGUAGES } from '../fileWithConstants';
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -25,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
 export default function TopNav() {
   const classes = useStyles();
 
-  const [language, setLanguage] = useState(localStorage.getItem('lng') || 'en');
+  const [language, setLanguage] = useState(
+    localStorage.getItem('lng') || i18n.language
+  );
 
   const changeHandler = (language) => {
     setLanguage(language);
@@ -43,18 +46,18 @@ export default function TopNav() {
         <Button
           className={classes.button}
           variant='outlined'
-          color={language === 'en' ? 'inherit' : 'default'}
-          onClick={() => changeHandler('en')}
+          color={language === LANGUAGES.ENGLISH ? 'inherit' : 'default'}
+          onClick={() => changeHandler(LANGUAGES.ENGLISH)}
         >
-          En
+          {LANGUAGES.ENGLISH}
         </Button>
         <Button
           className={classes.button}
           variant='outlined'
-          color={language === 'de' ? 'inherit' : 'default'}
-          onClick={() => changeHandler('de')}
+          color={language === LANGUAGES.GERMAN ? 'inherit' : 'default'}
+          onClick={() => changeHandler(LANGUAGES.GERMAN)}
         >
-          De
+          {LANGUAGES.GERMAN}
         </Button>
       </div>
     </AppBar>

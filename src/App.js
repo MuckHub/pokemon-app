@@ -14,7 +14,7 @@ function App() {
           <Main />
         </Route>
 
-        <Route path='/pokemon/:id'>
+        <Route path={`${POKEMON}:id`}>
           <Detailed />
         </Route>
 
