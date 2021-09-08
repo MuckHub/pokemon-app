@@ -5,4 +5,6 @@ export const POKEMON_API_URL = (pokemonsPerPage, pageOffset) => {
 };
 
 //routes
-export const DETAILED_PAGE = '/pokemon/:id';
+export const POKEMON = '/pokemon';
+
+

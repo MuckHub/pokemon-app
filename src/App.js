@@ -4,7 +4,7 @@ import Detailed from './components/Detailed';
 import NotFound from './components/404';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { DETAILED_PAGE } from './fileWithConstants';
+import { POKEMON } from './fileWithConstants';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
           <Main />
         </Route>
 
-        <Route exact path={DETAILED_PAGE}>
+        <Route path='/pokemon/:id'>
           <Detailed />
         </Route>
 
