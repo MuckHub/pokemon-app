@@ -4,9 +4,11 @@ import TopNav from './TopNav';
 import Container from '@material-ui/core/Container';
 import Pagination from './Pagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from 'axios';
 
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { POKEMON_API_URL } from '../fileWithConstants';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -25,66 +27,56 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
   const [data, setData] = useState(null);
-  const [page, setPage] = useState(0);
-  const [pokemonsPerPage, setPokemonsPerPage] = useState(10);
+  const [page, setPage] = useState(localStorage.getItem('page') || 0);
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(
+    localStorage.getItem('pokemons') || 10
+  );
+  const [isLoading, setIsLoading] = useState(true);
 
   const classes = useStyles();
-  let history = useHistory();
-  let url = useLocation().search;
-
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlSearchParams.entries());
+  const history = useHistory();
+  const pageOffset = page * pokemonsPerPage;
+  const apiURL = POKEMON_API_URL(pokemonsPerPage, pageOffset);
 
   const getData = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?limit=${params.limit}&offset=${
-          (params.page - 1) * params.limit
-        }`
-      );
-      const data = await response.json();
-      setData(data);
+      const response = await axios.get(apiURL);
+      setData(response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       history.push('/404');
     }
   };
 
   const handleChangePage = (event, newPage) => {
+    localStorage.setItem('page', newPage);
     setPage(newPage);
-    history.push(`pokemon?limit=${pokemonsPerPage}&page=${newPage + 1}`);
   };
 
   const handleChangePokemonsPerPage = (event) => {
     setPokemonsPerPage(parseInt(event.target.value, 10));
-    history.push(`pokemon?limit=${parseInt(event.target.value, 10)}&page=${1}`);
+    localStorage.setItem('pokemons', parseInt(event.target.value, 10));
+    localStorage.setItem('page', 0);
     setPage(0);
   };
 
   useEffect(() => {
-    if (params.limit >= 0 && params.page >= 0) {
-      setPokemonsPerPage(params.limit);
-      setPage(params.page - 1);
-      history.push(`pokemon?limit=${params.limit}&page=${params.page}`);
-      getData();
-    } else {
-      setPokemonsPerPage(10);
-      setPage(0);
-      history.push('pokemon?limit=10&page=1');
-      getData();
-    }
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [page, pokemonsPerPage]);
 
   return (
     <>
       <TopNav />
 
       <Container maxWidth='md' className={classes.container}>
-        {!data && <CircularProgress />}
-        {data && <Content data={data.results} />}
+        {isLoading && <CircularProgress />}
+        {!isLoading && <Content data={data.results} />}
       </Container>
 
-      {data && (
+      {!isLoading && (
         <div className={classes.pagination}>
           <Pagination
             onPageChange={handleChangePage}

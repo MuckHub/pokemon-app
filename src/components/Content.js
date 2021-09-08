@@ -1,38 +1,37 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    height: 60,
-    width: 120,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 500,
   },
-}));
+});
 
-export default function Content({ data }) {
+export default function CustomPaginationActionsTable({ data }) {
   const classes = useStyles();
 
   return (
-    <Grid container justifyContent='center' spacing={2}>
-      {data &&
-        data.map((value) => {
-          let id = value.url.split('/')[6];
-
-          return (
-            <Grid key={value.name} item>
-              <Link to={`/pokemon/${id}`}>
-                <Paper elevation={2} className={classes.paper}>
-                  {value.name}
-                </Paper>
-              </Link>
-            </Grid>
-          );
-        })}
-    </Grid>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label='custom pagination table'>
+        <TableBody>
+          {data.map((pokemon) => (
+            <TableRow key={pokemon.name}>
+              <TableCell component='th' scope='row'>
+                <Link href={`/pokemon/${pokemon.url.split('/')[6]}`}>
+                  {pokemon.name}
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

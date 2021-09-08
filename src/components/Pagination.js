@@ -1,6 +1,8 @@
 import React from 'react';
 import TablePagination from '@material-ui/core/TablePagination';
 
+import { useTranslation } from 'react-i18next';
+
 export default function Pagination({
   onPageChange,
   onRowsPerPageChange,
@@ -8,6 +10,7 @@ export default function Pagination({
   rowsPerPage,
   count,
 }) {
+  const { t } = useTranslation();
   return (
     <TablePagination
       component='div'
@@ -16,7 +19,7 @@ export default function Pagination({
       onPageChange={onPageChange}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={onRowsPerPageChange}
-      labelRowsPerPage='Pokemons per page:'
+      labelRowsPerPage={t('perPage')}
       rowsPerPageOptions={[5, 10, 50]}
     />
   );
