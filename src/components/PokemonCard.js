@@ -3,6 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -10,17 +11,16 @@ const useStyles = makeStyles({
     marginTop: 40,
     width: 200,
   },
-  pos: {
-    marginBottom: 12,
-  },
-  container: {
+  card: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  spinner: {
-    marginTop: 40,
+  name: { textAlign: 'center' },
+  pos: {
+    marginBottom: 12,
+    textAlign: 'center',
   },
   visible: {
     opacity: 1,
@@ -39,15 +39,16 @@ export default function PokemonCard({
   isLoaded,
 }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Card className={classes.root} variant='outlined'>
-      <CardContent>
-        <Typography variant='h5' component='h2'>
+      <CardContent className={classes.card}>
+        <Typography className={classes.name} variant='h5' component='h2'>
           {pokemonName}
         </Typography>
         <Typography className={classes.pos} color='textSecondary'>
-          Weight: {pokemonWeigth}
+          {t('weight')} {pokemonWeigth}
         </Typography>
 
         <img

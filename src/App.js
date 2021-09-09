@@ -4,6 +4,7 @@ import Detailed from './components/Detailed';
 import NotFound from './components/404';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { POKEMON } from './constants/routes';
 
 function App() {
   return (
@@ -13,11 +14,7 @@ function App() {
           <Main />
         </Route>
 
-        <Route exact path='/pokemon'>
-          <Main />
-        </Route>
-
-        <Route path='/pokemon/:id'>
+        <Route path={`${POKEMON}/:id`}>
           <Detailed />
         </Route>
 
